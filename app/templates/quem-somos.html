@@ -1,0 +1,39 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Quem Somos{% endblock %}
+
+{% block conteudo %}
+
+<section class="loja-header">
+    <span class="section-label">Nossa Equipe</span>
+    <h1>Quem Somos</h1>
+    <p class="loja-subtitle">Apaixonados por jogos, dedicados a te oferecer a melhor experiência.</p>
+</section>
+
+<section class="home-section">
+    <div class="section-content">
+        <span class="section-label">Nossa História</span>
+        <h2>Uma loja criada por gamers, para gamers</h2>
+        <p>A GameShop nasceu da paixão por jogos eletrônicos. Nossa missão é conectar jogadores aos melhores títulos do mercado, com preços justos e um atendimento excepcional.</p>
+        <p>Acreditamos que os jogos são mais do que entretenimento — são experiências que conectam pessoas, contam histórias e criam memórias inesquecíveis.</p>
+    </div>
+</section>
+
+{% if usuarios %}
+<section class="home-section">
+    <span class="section-label">Time</span>
+    <h2>Conheça nossa equipe</h2>
+    <div class="team-grid">
+        {% for u in usuarios %}
+        <div class="team-card">
+            <div class="team-avatar">{{ u.username|slice:":2"|upper }}</div>
+            <h3>{{ u.username }}</h3>
+            {% if u.email %}<p>{{ u.email }}</p>{% endif %}
+            <span class="team-role">{% if u.is_staff %}Administrador{% else %}Membro{% endif %}</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

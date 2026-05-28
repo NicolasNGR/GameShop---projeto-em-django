@@ -1,0 +1,28 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Contato{% endblock %}
+
+{% block conteudo %}
+
+<div class="form-page">
+    <div class="form-card">
+        <div class="form-card-icon">✉</div>
+        <h1>Fale Conosco</h1>
+        <p class="form-subtitle">Tem dúvidas? Manda uma mensagem!</p>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="field-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Enviar Mensagem →</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

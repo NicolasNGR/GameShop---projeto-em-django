@@ -1,0 +1,16 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Senha Alterada{% endblock %}
+
+{% block conteudo %}
+
+<div class="form-page">
+    <div class="form-card" style="text-align:center;">
+        <div class="form-card-icon">✅</div>
+        <h1>Senha alterada!</h1>
+        <p style="margin: 16px 0;">Sua senha foi atualizada com sucesso.</p>
+        <a href="{% url 'index' %}" class="btn-submit" style="display:inline-block; margin-top:8px;">Voltar ao início</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+from django.db import migrations, models
+import django.db.models.deletion
+
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = []
+
+    operations = [
+        migrations.CreateModel(
+            name='Categoria',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('nome', models.CharField(max_length=100)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Contato',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('nome', models.CharField(max_length=100)),
+                ('email', models.EmailField(max_length=100)),
+                ('assunto', models.CharField(max_length=100)),
+                ('mensagem', models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Produto',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('nome', models.CharField(max_length=100)),
+                ('imagem', models.ImageField(blank=True, null=True, upload_to='produtos/')),
+                ('quantidade', models.IntegerField()),
+                ('preco', models.DecimalField(decimal_places=2, max_digits=10)),
+                ('categoria', models.ForeignKey(
+                    blank=True, null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to='app.categoria'
+                )),
+            ],
+        ),
+    ]

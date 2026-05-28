@@ -1,0 +1,90 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Início{% endblock %}
+
+{% block conteudo %}
+
+<section class="hero">
+    <div class="hero-badge">🎮 Bem-vindo à GameShop</div>
+    <h1 class="hero-title">Os melhores jogos<br>estão aqui</h1>
+    <p class="hero-subtitle">Explore nosso catálogo com os títulos mais populares de todas as plataformas. Preços incríveis, entrega rápida.</p>
+    <div class="hero-actions">
+        <a href="{% url 'loja' %}" class="btn-primary">Ver Catálogo →</a>
+        <a href="{% url 'quemsomos' %}" class="btn-ghost">Quem Somos</a>
+    </div>
+</section>
+
+<section class="stats-bar">
+    <div class="stat-item">
+        <span class="stat-num">{{ total_jogos }}</span>
+        <span class="stat-desc">Jogos disponíveis</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <span class="stat-num">{{ total_categorias }}</span>
+        <span class="stat-desc">Categorias</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-desc">Satisfação garantida</span>
+    </div>
+</section>
+
+{% if produtos_destaque %}
+<section class="home-section">
+    <span class="section-label">Destaques</span>
+    <h2>Jogos em destaque</h2>
+    <div class="loja-grid" style="margin-top: 24px;">
+        {% for prod in produtos_destaque %}
+        <div class="product-card">
+            <div class="product-img-wrap">
+                {% if prod.imagem %}
+                    <img src="{{ prod.imagem.url }}" alt="{{ prod.nome }}">
+                {% else %}
+                    <div class="product-img-placeholder">🎮</div>
+                {% endif %}
+                {% if prod.categoria %}
+                    <span class="product-badge">{{ prod.categoria }}</span>
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">{{ prod.nome }}</h3>
+                <div class="product-footer">
+                    <span class="product-price">R$ {{ prod.preco }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div style="text-align:center; margin-top: 32px;">
+        <a href="{% url 'loja' %}" class="btn-primary">Ver todos os jogos →</a>
+    </div>
+</section>
+{% endif %}
+
+<section class="home-section home-section--alt">
+    <div class="section-content">
+        <span class="section-label">Por que a GameShop?</span>
+        <h2>Uma experiência completa para gamers</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <span class="feature-icon">🕹</span>
+                <h3>Catálogo enorme</h3>
+                <p>Jogos para todas as plataformas: PC, PlayStation, Xbox, Nintendo e mobile.</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">💰</span>
+                <h3>Melhores preços</h3>
+                <p>Promoções frequentes e preços competitivos em todos os títulos.</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🔒</span>
+                <h3>Compra segura</h3>
+                <p>Plataforma segura com suporte completo ao cliente.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

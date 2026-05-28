@@ -1,0 +1,64 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Loja{% endblock %}
+
+{% block conteudo %}
+
+<section class="loja-header">
+    <span class="section-label">Catálogo</span>
+    <h1>Nossa Loja</h1>
+    <p class="loja-subtitle">Encontre os melhores jogos para todas as plataformas.</p>
+</section>
+
+{% if categorias %}
+<div class="filtro-bar">
+    <a href="{% url 'loja' %}" class="filtro-btn {% if not categoria_selecionada %}active{% endif %}">Todos</a>
+    {% for cat in categorias %}
+        <a href="{% url 'loja' %}?categoria={{ cat.id }}" class="filtro-btn {% if categoria_selecionada == cat.id %}active{% endif %}">{{ cat.nome }}</a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if produtos %}
+<div class="loja-grid">
+    {% for prod in produtos %}
+    <div class="product-card">
+        <div class="product-img-wrap">
+            {% if prod.imagem %}
+                <img src="{{ prod.imagem.url }}" alt="{{ prod.nome }}">
+            {% else %}
+                <div class="product-img-placeholder">🎮</div>
+            {% endif %}
+            {% if prod.categoria %}
+                <span class="product-badge">{{ prod.categoria }}</span>
+            {% endif %}
+        </div>
+        <div class="product-info">
+            <h3 class="product-name">{{ prod.nome }}</h3>
+            <div class="product-meta">
+                <span class="product-qty {% if prod.quantidade == 0 %}sem-estoque{% endif %}">
+                    {% if prod.quantidade > 0 %}Estoque: {{ prod.quantidade }}{% else %}Esgotado{% endif %}
+                </span>
+            </div>
+            <div class="product-footer">
+                <span class="product-price">R$ {{ prod.preco }}</span>
+                {% if prod.quantidade > 0 %}
+                    <button class="btn-comprar">Comprar</button>
+                {% else %}
+                    <button class="btn-comprar disabled" disabled>Esgotado</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <span class="empty-icon">🎮</span>
+    <h2>Nenhum jogo encontrado</h2>
+    <p>Tente outra categoria ou volte em breve.</p>
+    <a href="{% url 'loja' %}" class="btn-primary" style="margin-top:16px;">Ver todos</a>
+</div>
+{% endif %}
+
+{% endblock %}

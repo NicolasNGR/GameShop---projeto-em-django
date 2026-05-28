@@ -1,0 +1,33 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Cadastro{% endblock %}
+
+{% block conteudo %}
+
+<div class="form-page">
+    <div class="form-card">
+        <div class="form-card-icon">🎮</div>
+        <h1>Criar conta</h1>
+        <p class="form-subtitle">Junte-se à GameShop</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="field-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <span class="field-error">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Criar Conta →</button>
+        </form>
+
+        <p class="form-footer">Já tem conta? <a href="{% url 'login' %}">Entrar</a></p>
+    </div>
+</div>
+
+{% endblock %}

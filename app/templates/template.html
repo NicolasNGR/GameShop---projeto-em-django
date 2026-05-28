@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block titulo %}{% endblock %} — GameShop</title>
+</head>
+<body>
+    <header>
+        <a href="{% url 'index' %}" class="logo">
+            <span class="logo-icon">🎮</span>
+            <span>GameShop</span>
+        </a>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'quemsomos' %}">Quem Somos</a>
+            <a href="{% url 'loja' %}">Loja</a>
+            <a href="{% url 'addcontato' %}">Contato</a>
+
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <a href="{% url 'dashboard' %}" class="nav-dash">⚙ {{ user.username }}</a>
+                {% else %}
+                    <a href="{% url 'editarusuario' %}" class="nav-user">{{ user.username }}</a>
+                {% endif %}
+                <a href="{% url 'alterarsenha' %}">Senha</a>
+                <form action="{% url 'logout' %}" method="post" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Sair</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-nav">Entrar</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">🎮 GameShop</span>
+                <p class="footer-tagline">Os melhores jogos em um só lugar</p>
+            </div>
+            <div class="footer-links">
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'quemsomos' %}">Quem Somos</a>
+                <a href="{% url 'loja' %}">Loja</a>
+                <a href="{% url 'addcontato' %}">Contato</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 GameShop. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal-backdrop" id="deleteModal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true">
+            <div class="modal-icon">🗑</div>
+            <h2 class="modal-title">Confirmar exclusão</h2>
+            <p class="modal-message">Você tem certeza que deseja excluir</p>
+            <p class="modal-name" id="modalName"></p>
+            <p class="modal-warning">Essa ação não pode ser desfeita.</p>
+            <div class="modal-actions">
+                <button class="modal-btn-cancel" id="modalCancel">Cancelar</button>
+                <a class="modal-btn-confirm" id="modalConfirm" href="#">Excluir</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('deleteModal');
+        const modalName = document.getElementById('modalName');
+        const modalConfirm = document.getElementById('modalConfirm');
+        const modalCancel = document.getElementById('modalCancel');
+
+        function openDeleteModal(url, name) {
+            modalName.textContent = '"' + name + '"';
+            modalConfirm.href = url;
+            modal.classList.add('modal-visible');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeDeleteModal() {
+            modal.classList.remove('modal-visible');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        modalCancel.addEventListener('click', closeDeleteModal);
+        modal.addEventListener('click', function(e) { if (e.target === modal) closeDeleteModal(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDeleteModal(); });
+    </script>
+</body>
+</html>

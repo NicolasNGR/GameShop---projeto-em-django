@@ -1,0 +1,28 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Adicionar Jogo{% endblock %}
+
+{% block conteudo %}
+
+<div class="form-page">
+    <div class="form-card">
+        <div class="form-card-icon">🎮</div>
+        <h1>Adicionar Jogo</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="field-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Salvar Jogo</button>
+        </form>
+        <p class="form-footer"><a href="{% url 'produto' %}">← Voltar</a></p>
+    </div>
+</div>
+
+{% endblock %}

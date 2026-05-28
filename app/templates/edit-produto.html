@@ -1,0 +1,31 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Editar Jogo{% endblock %}
+
+{% block conteudo %}
+
+<div class="form-page">
+    <div class="form-card">
+        <div class="form-card-icon">✏</div>
+        <h1>Editar: {{ produto.nome }}</h1>
+        {% if produto.imagem %}
+            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" style="width:100%; border-radius:8px; margin-bottom:16px; max-height:200px; object-fit:cover;">
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="field-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Salvar Alterações</button>
+        </form>
+        <p class="form-footer"><a href="{% url 'produto' %}">← Voltar</a></p>
+    </div>
+</div>
+
+{% endblock %}

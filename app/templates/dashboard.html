@@ -1,0 +1,91 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Dashboard{% endblock %}
+
+{% block conteudo %}
+
+<div class="dash-header">
+    <div>
+        <span class="section-label">Painel Administrativo</span>
+        <h1>🎮 Dashboard</h1>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="dash-user">
+        <div class="dash-avatar">{{ user.username|slice:":2"|upper }}</div>
+        <div>
+            <p class="dash-username">{{ user.username }}</p>
+            <p class="dash-role">{% if user.is_superuser %}Administrador{% else %}Staff{% endif %}</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="dash-stats">
+    <div class="stat-card">
+        <span class="stat-card-icon">🎮</span>
+        <div>
+            <span class="stat-card-num">{{ total_produtos }}</span>
+            <span class="stat-card-label">Jogos</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-card-icon">🏷</span>
+        <div>
+            <span class="stat-card-num">{{ total_categorias }}</span>
+            <span class="stat-card-label">Categorias</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-card-icon">✉</span>
+        <div>
+            <span class="stat-card-num">{{ total_contatos }}</span>
+            <span class="stat-card-label">Contatos</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-card-icon">👥</span>
+        <div>
+            <span class="stat-card-num">{{ total_usuarios }}</span>
+            <span class="stat-card-label">Usuários</span>
+        </div>
+    </div>
+</div>
+
+<h2 class="dash-section-title">Gerenciar</h2>
+
+<div class="dash-grid">
+    <a href="{% url 'produto' %}" class="dash-card">
+        <div class="dash-card-icon">🎮</div>
+        <div class="dash-card-body">
+            <h3>Jogos / Produtos</h3>
+            <p>Adicionar, editar e remover jogos do catálogo.</p>
+        </div>
+        <span class="dash-card-arrow">→</span>
+    </a>
+    <a href="{% url 'categoria' %}" class="dash-card">
+        <div class="dash-card-icon">🏷</div>
+        <div class="dash-card-body">
+            <h3>Categorias</h3>
+            <p>Organizar e gerenciar categorias de jogos.</p>
+        </div>
+        <span class="dash-card-arrow">→</span>
+    </a>
+    <a href="{% url 'contato' %}" class="dash-card">
+        <div class="dash-card-icon">✉</div>
+        <div class="dash-card-body">
+            <h3>Contatos</h3>
+            <p>Visualizar mensagens recebidas dos clientes.</p>
+        </div>
+        <span class="dash-card-arrow">→</span>
+    </a>
+    <a href="{% url 'usuarios' %}" class="dash-card">
+        <div class="dash-card-icon">👥</div>
+        <div class="dash-card-body">
+            <h3>Usuários</h3>
+            <p>Ver e gerenciar todos os usuários cadastrados.</p>
+        </div>
+        <span class="dash-card-arrow">→</span>
+    </a>
+</div>
+
+{% endblock %}

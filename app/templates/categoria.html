@@ -1,0 +1,49 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Categorias{% endblock %}
+
+{% block conteudo %}
+
+<div class="page-header">
+    <div>
+        <span class="section-label">Administração</span>
+        <h1>🏷 Categorias</h1>
+    </div>
+    <a href="{% url 'addcategoria' %}" class="btn-primary">+ Nova Categoria</a>
+</div>
+
+{% if categorias %}
+<div class="table-wrap">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cat in categorias %}
+            <tr>
+                <td>{{ cat.id }}</td>
+                <td><strong>{{ cat.nome }}</strong></td>
+                <td class="actions-cell">
+                    <a href="{% url 'editcategoria' cat.id %}" class="btn-edit">Editar</a>
+                    <button class="btn-delete" onclick="openDeleteModal('{% url 'delcategoria' cat.id %}', '{{ cat.nome }}')">Excluir</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <span class="empty-icon">🏷</span>
+    <h2>Nenhuma categoria</h2>
+    <p>Adicione a primeira categoria.</p>
+</div>
+{% endif %}
+
+<p style="margin-top:24px;"><a href="{% url 'dashboard' %}">← Voltar ao Dashboard</a></p>
+
+{% endblock %}

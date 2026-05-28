@@ -1,0 +1,51 @@
+{% extends 'template.html' %}
+
+{% block titulo %}Contatos{% endblock %}
+
+{% block conteudo %}
+
+<div class="page-header">
+    <div>
+        <span class="section-label">Administração</span>
+        <h1>✉ Contatos</h1>
+    </div>
+</div>
+
+{% if contatos %}
+<div class="table-wrap">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Assunto</th>
+                <th>Mensagem</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in contatos %}
+            <tr>
+                <td><strong>{{ c.nome }}</strong></td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.assunto }}</td>
+                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ c.mensagem }}</td>
+                <td class="actions-cell">
+                    <button class="btn-delete" onclick="openDeleteModal('{% url 'delcontato' c.id %}', '{{ c.nome }}')">Excluir</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <span class="empty-icon">✉</span>
+    <h2>Nenhuma mensagem</h2>
+    <p>Nenhum contato foi enviado ainda.</p>
+</div>
+{% endif %}
+
+<p style="margin-top:24px;"><a href="{% url 'dashboard' %}">← Voltar ao Dashboard</a></p>
+
+{% endblock %}
